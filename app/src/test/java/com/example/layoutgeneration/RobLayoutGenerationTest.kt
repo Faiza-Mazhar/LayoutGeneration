@@ -2,6 +2,7 @@ package com.example.layoutgeneration
 
 import org.junit.Assert
 import org.junit.Assert.assertEquals
+import org.junit.Assert.fail
 import org.junit.Test
 
 
@@ -156,11 +157,23 @@ internal class RobLayoutGenerationTest {
 
     @Test
     fun `run generation on all sizes`() {
+        var failed = false
         for (count in 3..13) {
             val expected = ALL_EXPECTED[count-3]
             val input = createInput(count)
             val output = layoutGeneration.generateLayout(input)
-            assertEquals("Failed on count $count", expected, output)
+
+            if (expected != output) {
+                failed = true
+                println("$count - Failed, got $output")
+            } else {
+                println("$count - Passed")
+            }
+            //assertEquals("Failed on count $count", expected, output)
+        }
+
+        if (failed) {
+            fail("Something went wrong")
         }
     }
 }

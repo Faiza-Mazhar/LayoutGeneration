@@ -4,20 +4,28 @@ class LayoutGeneration {
     fun generateLayout(items: List<Int>): List<PromoWithSpan> {
         val promoList = mutableListOf<PromoWithSpan>()
 
-        promoList.add(0, PromoWithSpan(
+        //first cell is always a large promo
+        promoList.add(PromoWithSpan(
             HierarchicalCollectionPromoType.LargePromo,
             SpanType.Full
             )
         )
 
-        val alone = (items.size - 1) % 2
-        val pairs = (items.size - 1) / 2
+        var remainingItems = items.subList(1, items.size)
+        val isEven = remainingItems.size % 2 == 0
 
+        if (isEven) {
+            val largePromoCount = remainingItems.take(4).size
+            for (i in 1..largePromoCount) {
+                promoList.add(PromoWithSpan(
+                    HierarchicalCollectionPromoType.GridPromo,
+                    SpanType.Half
+                ))
+            }
+            //remainingItems = remainingItems.subList(largePromoCount, items.size)
+        } else {
 
-        for (index in 1 .. items.size) {
-            promoList.add(createGridPromo())
         }
-
         return promoList
     }
 }
