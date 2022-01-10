@@ -24,7 +24,7 @@ class LayoutGeneration {
 
 fun createGridPromo() = PromoWithSpan(HierarchicalCollectionPromoType.GridPromo, SpanType.Half)
 
-class PromoWithSpan(val promoType: HierarchicalCollectionPromoType, val spanType: SpanType)
+data class PromoWithSpan(val promoType: HierarchicalCollectionPromoType, val spanType: SpanType)
 
 enum class HierarchicalCollectionPromoType {
     LargePromo,
