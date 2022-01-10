@@ -3,6 +3,11 @@ package com.example.layoutgeneration
 import kotlin.math.min
 
 class MobileLayoutGeneration {
+
+    companion object {
+        const val MAX_NUMBER_OF_ITEMS: Int = 4
+        const val MAX_ITEM_IN_ROW: Int = 2
+    }
     fun generateLayout(items: List<Int>): List<PromoWithSpan> {
 
         val inputSize = items.size
@@ -19,24 +24,22 @@ class MobileLayoutGeneration {
         )
 
         remainingItems--
-
-        val remainderFromGrid = min(remainingItems, 4) % 2
-        var gridPromoCount = min(remainingItems, 4) - remainderFromGrid
+        val remainderFromGrid = min(remainingItems, MAX_NUMBER_OF_ITEMS) % MAX_ITEM_IN_ROW
+        var gridPromoCount = min(remainingItems, MAX_NUMBER_OF_ITEMS) - remainderFromGrid
         remainingItems -= gridPromoCount
 
-        var horizontalPromoCount = min(remainingItems, 4)
+        var horizontalPromoCount = min(remainingItems, MAX_NUMBER_OF_ITEMS)
         if(horizontalPromoCount == 1) {
             gridPromoCount -= 2
             horizontalPromoCount += 2
         }
         remainingItems -= horizontalPromoCount
 
-        var horizontalTextOnlyPromoCount = min(remainingItems, 4)
+        var horizontalTextOnlyPromoCount = min(remainingItems, MAX_NUMBER_OF_ITEMS)
         if(horizontalTextOnlyPromoCount == 1) {
             horizontalTextOnlyPromoCount--
             horizontalPromoCount++
         }
-
 
         promoList.addAll(getPromoTypeAndSpan(gridPromoCount, HierarchicalCollectionPromoType.GridPromo, SpanType.Half))
         promoList.addAll(getPromoTypeAndSpan(horizontalPromoCount, HierarchicalCollectionPromoType.HorizontalPromo, SpanType.Full))

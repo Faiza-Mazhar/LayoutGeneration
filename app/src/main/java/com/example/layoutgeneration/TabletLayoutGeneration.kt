@@ -3,6 +3,9 @@ package com.example.layoutgeneration
 import kotlin.math.ceil
 
 class TabletLayoutGeneration {
+    companion object {
+        const val MAX_ITEM_IN_ROW = 4f
+    }
     fun generateLayout(items: List<Int>): List<PromoWithSpan> {
 
         val inputSize = items.size
@@ -19,15 +22,15 @@ class TabletLayoutGeneration {
 
         remainingItems--
 
-        val row = ceil(remainingItems / 4f).toInt()
+        val numRows = ceil(remainingItems / MAX_ITEM_IN_ROW).toInt()
 
-        val firstRowCount = remainingItems / row
+        val firstRowCount = remainingItems / numRows
         remainingItems -= firstRowCount
 
-        val secondRowCount = if (row >= 2) (remainingItems / (row - 1)) else 0
+        val secondRowCount = if (numRows >= 2) (remainingItems / (numRows - 1)) else 0
         remainingItems -= secondRowCount
 
-        val thirdRowCount = if (row >= 3) (remainingItems / (row - 2)) else 0
+        val thirdRowCount = if (numRows >= 3) (remainingItems / (numRows - 2)) else 0
 
         promoList.addAll(getPromoTypeAndSpan(firstRowCount, HierarchicalCollectionPromoType.GridPromo))
         promoList.addAll(getPromoTypeAndSpan(secondRowCount, HierarchicalCollectionPromoType.GridPromo))
