@@ -19,44 +19,48 @@ class LayoutGeneration {
 
         remainingItems--
 
-        val gridPromoCount = min(remainingItems, 4)
-        for (i in 1..gridPromoCount) {
-            promoList.add(
-                PromoWithSpan(
-                    HierarchicalCollectionPromoType.GridPromo,
-                    SpanType.Half
-                )
-            )
-        }
+        val remainderFromGrid = min(remainingItems, 4) % 2
+        var gridPromoCount = min(remainingItems, 4) - remainderFromGrid
         remainingItems -= gridPromoCount
 
-        val horizontalPromoCount = min(remainingItems, 4)
-        for (i in 1..horizontalPromoCount) {
-            promoList.add(
-                PromoWithSpan(
-                    HierarchicalCollectionPromoType.HorizontalPromo,
-                    SpanType.Full
-                )
-            )
+        var horizontalPromoCount = min(remainingItems, 4)
+
+        if(horizontalPromoCount == 1) {
+            gridPromoCount-=2
+            horizontalPromoCount+=2
         }
         remainingItems -= horizontalPromoCount
 
-        val horizontalTextOnlyPromoCount = min(remainingItems, 4)
-        for (i in 1..horizontalTextOnlyPromoCount) {
-            promoList.add(
+        var horizontalTextOnlyPromoCount = min(remainingItems, 4)
+
+        if(horizontalTextOnlyPromoCount == 1) {
+            horizontalTextOnlyPromoCount--
+            horizontalPromoCount++
+        }
+
+
+        promoList.addAll(getPromoTypeAndSpan(gridPromoCount, HierarchicalCollectionPromoType.GridPromo, SpanType.Half))
+        promoList.addAll(getPromoTypeAndSpan(horizontalPromoCount, HierarchicalCollectionPromoType.HorizontalPromo, SpanType.Full))
+        promoList.addAll(getPromoTypeAndSpan(horizontalTextOnlyPromoCount, HierarchicalCollectionPromoType.HorizontalTextOnlyPromo, SpanType.Full))
+
+        return promoList
+    }
+
+    private fun getPromoTypeAndSpan(
+        gridPromoCount: Int,
+        promoType: HierarchicalCollectionPromoType,
+        spanType: SpanType
+    ): MutableList<PromoWithSpan> {
+        val list = mutableListOf<PromoWithSpan>()
+        for (i in 1..gridPromoCount) {
+            list.add(
                 PromoWithSpan(
-                    HierarchicalCollectionPromoType.HorizontalTextOnlyPromo,
-                    SpanType.Full
+                    promoType,
+                    spanType
                 )
             )
         }
-        remainingItems -= horizontalTextOnlyPromoCount
-
-        //TODO: horizontals
-
-        //TODO: text only
-
-        return promoList
+        return list
     }
 }
 
