@@ -1,7 +1,13 @@
 package com.example.layoutgeneration
 
+import kotlin.math.min
+
 class LayoutGeneration {
     fun generateLayout(items: List<Int>): List<PromoWithSpan> {
+
+        val inputSize = items.size
+        var remainingItems = inputSize
+
         val promoList = mutableListOf<PromoWithSpan>()
 
         //first cell is always a large promo
@@ -11,21 +17,26 @@ class LayoutGeneration {
             )
         )
 
-        var remainingItems = items.subList(1, items.size)
-        val isEven = remainingItems.size % 2 == 0
+        remainingItems--
+        val isEven = remainingItems % 2 == 0
 
         if (isEven) {
-            val largePromoCount = remainingItems.take(4).size
+            val largePromoCount = min(remainingItems, 4)
             for (i in 1..largePromoCount) {
                 promoList.add(PromoWithSpan(
                     HierarchicalCollectionPromoType.GridPromo,
                     SpanType.Half
                 ))
             }
-            //remainingItems = remainingItems.subList(largePromoCount, items.size)
+            remainingItems -= largePromoCount
         } else {
-
+            //TODO: handle odd cases
         }
+
+        //TODO: horizontals
+
+        //TODO: text only
+
         return promoList
     }
 }
