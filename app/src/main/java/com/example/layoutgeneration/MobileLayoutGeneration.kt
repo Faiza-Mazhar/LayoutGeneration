@@ -2,7 +2,7 @@ package com.example.layoutgeneration
 
 import kotlin.math.min
 
-class LayoutGeneration {
+class MobileLayoutGeneration {
     fun generateLayout(items: List<Int>): List<PromoWithSpan> {
 
         val inputSize = items.size
@@ -25,15 +25,13 @@ class LayoutGeneration {
         remainingItems -= gridPromoCount
 
         var horizontalPromoCount = min(remainingItems, 4)
-
         if(horizontalPromoCount == 1) {
-            gridPromoCount-=2
-            horizontalPromoCount+=2
+            gridPromoCount -= 2
+            horizontalPromoCount += 2
         }
         remainingItems -= horizontalPromoCount
 
         var horizontalTextOnlyPromoCount = min(remainingItems, 4)
-
         if(horizontalTextOnlyPromoCount == 1) {
             horizontalTextOnlyPromoCount--
             horizontalPromoCount++

@@ -6,7 +6,7 @@ import org.junit.Test
 
 internal class LayoutGenerationTest {
 
-    private val layoutGeneration = LayoutGeneration()
+    private val layoutGeneration = MobileLayoutGeneration()
     @Test
     fun `first promo is always a large promo with span Full`() {
         val list = layoutGeneration.generateLayout(listOf(1,2,3))

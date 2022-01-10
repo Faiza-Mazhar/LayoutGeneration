@@ -151,7 +151,7 @@ internal class RobLayoutGenerationTest {
         return output
     }
 
-    private val layoutGeneration = LayoutGeneration()
+    private val layoutGeneration = MobileLayoutGeneration()
 
     @Test
     fun `run generation on all sizes`() {
