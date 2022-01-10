@@ -18,20 +18,39 @@ class LayoutGeneration {
         )
 
         remainingItems--
-        val isEven = remainingItems % 2 == 0
 
-        if (isEven) {
-            val largePromoCount = min(remainingItems, 4)
-            for (i in 1..largePromoCount) {
-                promoList.add(PromoWithSpan(
+        val gridPromoCount = min(remainingItems, 4)
+        for (i in 1..gridPromoCount) {
+            promoList.add(
+                PromoWithSpan(
                     HierarchicalCollectionPromoType.GridPromo,
                     SpanType.Half
-                ))
-            }
-            remainingItems -= largePromoCount
-        } else {
-            //TODO: handle odd cases
+                )
+            )
         }
+        remainingItems -= gridPromoCount
+
+        val horizontalPromoCount = min(remainingItems, 4)
+        for (i in 1..horizontalPromoCount) {
+            promoList.add(
+                PromoWithSpan(
+                    HierarchicalCollectionPromoType.HorizontalPromo,
+                    SpanType.Full
+                )
+            )
+        }
+        remainingItems -= horizontalPromoCount
+
+        val horizontalTextOnlyPromoCount = min(remainingItems, 4)
+        for (i in 1..horizontalTextOnlyPromoCount) {
+            promoList.add(
+                PromoWithSpan(
+                    HierarchicalCollectionPromoType.HorizontalTextOnlyPromo,
+                    SpanType.Full
+                )
+            )
+        }
+        remainingItems -= horizontalTextOnlyPromoCount
 
         //TODO: horizontals
 
