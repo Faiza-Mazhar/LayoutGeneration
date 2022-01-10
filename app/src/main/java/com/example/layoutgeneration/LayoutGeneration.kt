@@ -11,7 +11,8 @@ class LayoutGeneration {
         val promoList = mutableListOf<PromoWithSpan>()
 
         //first cell is always a large promo
-        promoList.add(PromoWithSpan(
+        promoList.add(
+            PromoWithSpan(
             HierarchicalCollectionPromoType.LargePromo,
             SpanType.Full
             )
@@ -63,8 +64,6 @@ class LayoutGeneration {
         return list
     }
 }
-
-fun createGridPromo() = PromoWithSpan(HierarchicalCollectionPromoType.GridPromo, SpanType.Half)
 
 data class PromoWithSpan(val promoType: HierarchicalCollectionPromoType, val spanType: SpanType)
 
